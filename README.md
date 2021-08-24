@@ -1,25 +1,6 @@
 # Final-Year-Project
 
-
-## Virtual Tourist Guide Application  -  Idea 1
-
-  - Import the image or click a photo of a monument 
-  - Image recognition with openCV (dataset available on kaggle)
-  - GPS Locations using Google maps API 
-  - Displaying Information about the monument. 
-
-  Extra Features (Beyond Research paper)
-  - Itinerary 
- -  Nearby places 
-
-  Domain 
-  - Android 
-  -  ML
-
-[Paper](https://github.com/R-A-N-N/Final-Year-Project/blob/main/Virtual%20tourist%20guide.pdf)
-
-
-## Detecting Citizen Problems and Their Locations Using Twitter Data -  Idea 2
+## Detecting Citizen Problems and Their Locations Using Twitter Data 
 
   - This Project focuses on the ways of finding citizen problems with their locations by using tweet data.
   - Analyzing the collected data to get information of any city event, citizen's complaint or requests about a problem.
@@ -29,7 +10,7 @@
   - A location recognizer, which finds the Turkish place names in a text, is created and applied on the tweets that are marked as information-containing by the classifier to detect the location of the problem precisely. 
   
    Domain 
-   -  ML
+   - ML
    - Data Analysis
    - Android Or Full Stack
   
@@ -37,16 +18,4 @@
 
 
 
-## Nutrition Oriented Online Recipe Recommender  -  Idea 3
-
- -  Recommend recipes according to ingredients present already  
- - ML model to recommend recipes according to nutritional values.
- - Algorithm which utilizes machine-learning techniques such as neural networks and matrix factorization in order to model the interactions between ingredients and     their proportions within recipes for the purpose of offering suitable recommendations
-
- Domain 
- - Android
- - ML
-
-[Paper](https://github.com/R-A-N-N/Final-Year-Project/blob/e675a4cad377faa9aa9b15cdb596216ab5abb084/NutRec.pdf)
-
-
+Google Docs :  [Link](https://docs.google.com/document/d/1oBPIi1p9BEuIUG051El2xtv6g9PlOi2JwpToZjHSzHs/edit)
