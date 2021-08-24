@@ -14,7 +14,7 @@
    - Data Analysis
    - Android Or Full Stack
   
-[Paper](https://github.com/R-A-N-N/Final-Year-Project/blob/e675a4cad377faa9aa9b15cdb596216ab5abb084/Detecting%20Citizen%20Problems%20and%20Their%20Locations%20Using%20Twitter%20Data.pdf)
+IEEE Research Paper : [Link](https://github.com/R-A-N-N/Final-Year-Project/blob/e675a4cad377faa9aa9b15cdb596216ab5abb084/Detecting%20Citizen%20Problems%20and%20Their%20Locations%20Using%20Twitter%20Data.pdf)
 
 
 
