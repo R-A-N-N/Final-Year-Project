@@ -4,6 +4,16 @@ from time import sleep
 from kafka import KafkaConsumer, KafkaProducer
 from datetime import datetime
 import csv
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.feature_extraction.text import CountVectorizer
+import nltk 
+import string
+import re
+import os
+
 
 
 consumer_key= 'qc8vFuKFgGzcoxbhAkREHxRoE'
