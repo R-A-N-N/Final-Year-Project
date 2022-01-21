@@ -13,6 +13,8 @@ import nltk
 import string
 import re
 import os
+from model_traning import *
+
 
 
 
@@ -30,6 +32,20 @@ api = tw.API(auth, wait_on_rate_limit=True)
     
 producer = KafkaProducer(bootstrap_servers="localhost:9092")
 topic_name = 'fyp'
+
+
+def pre_process(tweet_str):
+    str1 = re.sub(r'^https?:\/\/.*[\r\n]*', '', tweet_str, flags=re.MULTILINE)
+    emoji_pattern = re.compile("["
+        u"\U0001F600-\U0001F64F"  # emoticons
+        u"\U0001F300-\U0001F5FF"  # symbols & pictographs
+        u"\U0001F680-\U0001F6FF"  # transport & map symbols
+        u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
+                           "]+", flags=re.UNICODE)
+    str1 = emoji_pattern.sub(r'', str1) # no emoji
+    str1 = str1.replace('(@\w+.*?)',"" )
+    str1 = str1.replace('(#\w+.*?)',"" )
+    return str1
 
 def get_twitter_data():
 
@@ -56,8 +72,16 @@ def get_twitter_data():
             # Iterate and print tweets
             for tweet in tweets:
                 csvWriter.writerow([tweet.created_at, tweet.full_text ,tweet.user.screen_name , tweet.user.location])
-                print(tweet.full_text)
+                # print(tweet.full_text)
                 producer.send(topic_name, str.encode(tweet.full_text))
+
+                str2 = pre_process(tweet.full_text)
+                lst = [str2]
+                df = pd.Series( (v[0] for v in lst) )
+                trial1 = count_vector.transform(df)
+                predict = naive_bayes.predict(trial1)
+                # print(tweet.full_text)
+                print(predict)
 
 
 
@@ -71,3 +95,7 @@ def periodic_work(interval):
 
 
 periodic_work(60*0.1)
+
+
+
+

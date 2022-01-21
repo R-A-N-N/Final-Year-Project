@@ -42,6 +42,44 @@ df2.drop_duplicates(subset ="Tweets",
                      keep = False, inplace = True)
 df2.head(10)
 
+# sns.countplot(x = 'Output', data = df2)
+# plt.show()
+
+
+# #WordCloud Visualisation 
+
+
+# df2['Output'] = df2['Output'].astype(str).astype(int)
+# df2.dtypes
+
+# from wordcloud import WordCloud, STOPWORDS , ImageColorGenerator
+# # Start with one review:
+# df_Related = df2[df2['Output']==1]
+# df_notRelated = df2[df2['Output']==0]
+# tweet_All = " ".join(review for review in df2.Tweets)
+# tweet_Realted = " ".join(review for review in df_Related.Tweets)
+# tweet_notRelated = " ".join(review for review in df_notRelated.Tweets)
+
+# # Create and generate a word cloud image:
+# wordcloud_ALL = WordCloud(max_font_size=50, max_words=100, background_color="black").generate(tweet_All)
+# wordcloud_Realted = WordCloud(max_font_size=50, max_words=100, background_color="black").generate(tweet_Realted)
+# wordcloud_notRelated = WordCloud(max_font_size=50, max_words=100, background_color="black").generate(tweet_notRelated)
+
+
+# fig, ax = plt.subplots(3, 1, figsize  = (30,30))
+# # Display the generated image:
+# ax[0].imshow(wordcloud_ALL, interpolation='bilinear')
+# ax[0].set_title('All Tweets', fontsize=30)
+# ax[0].axis('off')
+
+# ax[1].imshow(wordcloud_Realted, interpolation='bilinear')
+# ax[1].set_title('Tweets Related to a Problem in Thane ',fontsize=30)
+# ax[1].axis('off')
+
+# ax[2].imshow(wordcloud_notRelated, interpolation='bilinear')
+# ax[2].set_title('Tweets Not Realted to Problems for Thane',fontsize=30)
+# ax[2].axis('off')
+# plt.show()
 
 #Pre-processing text data
 
@@ -154,7 +192,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 print('Accuracy score: ', format(accuracy_score(y_test, predictions)))
 print('Precision score: ', format(precision_score(y_test, predictions , pos_label='1')))
 print('Recall score: ', format(recall_score(y_test, predictions , pos_label='1')))
-print('F1 score: ', format(f1_score(y_test, predictions ,pos_label='1' )))
+print('F1 score: ', format(f1_score(y_test, predictions ,pos_label='1')))
 
 
 
