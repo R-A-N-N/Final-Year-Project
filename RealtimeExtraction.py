@@ -35,16 +35,16 @@ topic_name = 'fyp'
 
 
 def pre_process(tweet_str):
-    str1 = re.sub(r'^https?:\/\/.*[\r\n]*', '', tweet_str, flags=re.MULTILINE)
     emoji_pattern = re.compile("["
         u"\U0001F600-\U0001F64F"  # emoticons
         u"\U0001F300-\U0001F5FF"  # symbols & pictographs
         u"\U0001F680-\U0001F6FF"  # transport & map symbols
         u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
                            "]+", flags=re.UNICODE)
-    str1 = emoji_pattern.sub(r'', str1) # no emoji
-    str1 = str1.replace('(@\w+.*?)',"" )
-    str1 = str1.replace('(#\w+.*?)',"" )
+    str1 = emoji_pattern.sub(r'', tweet_str) # no emoji
+    str1 = ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)"," ",str1).split())
+   
+    # print(str1)
     return str1
 
 def get_twitter_data():

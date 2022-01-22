@@ -222,7 +222,8 @@ lst1 = [['Traffic is crazy']
        ,['Cant sleep']
        ,['Heavy rainfall in the city']
        ,['I have a problem in my family']
-       ,['There are no proper streetlights in this city TMC should take action']] 
+       ,['There are no proper streetlights in this city TMC should take action']
+        ,['This is how citizens respect traffic laws in Mumbai. + No Helmet+ Wrong Side Driving'],['RT This is how citizens respect traffic laws in Mumbai No Helmet Wrong Side Driving Not expecting any action on this']] 
 
 df = pd.Series( (v[0] for v in lst1) )
 
