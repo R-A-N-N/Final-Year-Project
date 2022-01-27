@@ -12,6 +12,7 @@ import nltk
 import string
 import re
 import os
+import pickle
 
 
 #modle traning 
@@ -195,6 +196,16 @@ print('Recall score: ', format(recall_score(y_test, predictions , pos_label='1')
 print('F1 score: ', format(f1_score(y_test, predictions ,pos_label='1')))
 
 
+# Saving the model 
+# Save the trained model as a pickle string.
+saved_model = pickle.dumps(naive_bayes)
+ 
+# Load the pickled model
+naive_bayes_from_pickle = pickle.loads(saved_model)
+ 
+# Use the loaded pickled model to make predictions
+# naive_bayes_from_pickle.predict(X_test)
+
 
 lst = [
        ['we should meet at ghodbunder road']
@@ -209,7 +220,7 @@ df = pd.Series( (v[0] for v in lst) )
 
 trial = count_vector.transform(df)
 
-prediction_trial = naive_bayes.predict(trial)
+prediction_trial = naive_bayes_from_pickle.predict(trial)
 print(prediction_trial)
 
 
@@ -229,5 +240,5 @@ df = pd.Series( (v[0] for v in lst1) )
 
 trial = count_vector.transform(df)
 
-prediction_trial = naive_bayes.predict(trial)
+prediction_trial = naive_bayes_from_pickle.predict(trial)
 print(prediction_trial)

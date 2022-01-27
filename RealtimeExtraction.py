@@ -16,8 +16,6 @@ import os
 from model_traning import *
 
 
-
-
 consumer_key= 'qc8vFuKFgGzcoxbhAkREHxRoE'
 consumer_secret= 'ui2u5ZnJYLPtBrTNMreRGIeRZBLwGoF1W9XPmdYvSVofWg6o6A'
 access_token= '1429353996188196876-CBoTpX136goMmypFtgTk2WO4sqH0ZC'
@@ -47,6 +45,9 @@ def pre_process(tweet_str):
     # print(str1)
     return str1
 
+
+
+
 def get_twitter_data():
 
     csvFile = open('/Users/nidhivanjare/Documents/GitHub/Final-Year-Project/Extracted Data.csv', 'a')
@@ -70,7 +71,9 @@ def get_twitter_data():
                         lang="en", count= 1 ,tweet_mode="extended").items()
             tweets
             # Iterate and print tweets
+            
             for tweet in tweets:
+
                 csvWriter.writerow([tweet.created_at, tweet.full_text ,tweet.user.screen_name , tweet.user.location])
                 # print(tweet.full_text)
                 producer.send(topic_name, str.encode(tweet.full_text))
@@ -79,9 +82,22 @@ def get_twitter_data():
                 lst = [str2]
                 df = pd.Series( (v[0] for v in lst) )
                 trial1 = count_vector.transform(df)
-                predict = naive_bayes.predict(trial1)
-                # print(tweet.full_text)
+                predict = naive_bayes_from_pickle.predict(trial1)
+                print(str2)
                 print(predict)
+                lst.clear()
+
+                # lst = [] 
+                # for i in range(1,100):
+                #     str2 = pre_process(tweet.full_text)
+                #     lst.append(str2)
+                #     df = pd.Series( (v[0] for v in lst) )
+                # trial1 = count_vector.transform(df)
+                # predict = naive_bayes_from_pickle.predict(trial1)
+                # # print(str2)
+                # print(predict)
+                
+
 
 
 
