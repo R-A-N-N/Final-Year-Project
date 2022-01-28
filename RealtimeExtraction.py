@@ -74,25 +74,24 @@ def get_twitter_data():
             # Iterate and print tweets
             
             for tweet in tweets:
+            
+                csvWriter.writerow([tweet.created_at, tweet.full_text ,tweet.user.screen_name , tweet.user.location])
+                # print(tweet.full_text)
+                producer.send(topic_name, str.encode(tweet.full_text))
 
-                for i in range(1,10):
-                    csvWriter.writerow([tweet.created_at, tweet.full_text ,tweet.user.screen_name , tweet.user.location])
-                    # print(tweet.full_text)
-                    producer.send(topic_name, str.encode(tweet.full_text))
-
-                    str2 = pre_process(tweet.full_text)
-                    lst = [str2]
-                    df = pd.Series( (v[0] for v in lst) )
-                    trial1 = count_vector.transform(df)
-                    predict = naive_bayes_from_pickle.predict(trial1)
-                    print(str2)
-                    print(predict)
-                    lst.clear()
-                    
-                    if (predict == '0'):
-                        post = {"_id": id, "tweet": tweet.full_text}
-                        id = id+1
-                        get_post(post)
+                str2 = pre_process(tweet.full_text)
+                lst = [str2]
+                df = pd.Series( (v[0] for v in lst) )
+                trial1 = count_vector.transform(df)
+                predict = naive_bayes_from_pickle.predict(trial1)
+                print(str2)
+                print(predict)
+                lst.clear()
+                
+                if (predict == '0'):
+                    post = {"_id": id, "tweet": tweet.full_text}
+                    id = id+1
+                    get_post(post)
 
                 # lst = [] 
                 # for i in range(1,100):
