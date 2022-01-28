@@ -14,24 +14,25 @@ import string
 import re
 import os
 from model_traning import *
+from mongodbConnection import *
 
 
-consumer_key= 'qc8vFuKFgGzcoxbhAkREHxRoE'
-consumer_secret= 'ui2u5ZnJYLPtBrTNMreRGIeRZBLwGoF1W9XPmdYvSVofWg6o6A'
-access_token= '1429353996188196876-CBoTpX136goMmypFtgTk2WO4sqH0ZC'
-access_token_secret= '2ETqV9DxxdlVqMEEDw9A9kbY2Dy4L4rtlOlpuAoVYuEXl'
+consumer_key= '<KEY>'
+consumer_secret= '<KEY>'
+access_token= '<KEY>'
+access_token_secret= '<KEY>'
 
 
 auth = tw.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 api = tw.API(auth, wait_on_rate_limit=True)
 
-
     
 producer = KafkaProducer(bootstrap_servers="localhost:9092")
 topic_name = 'fyp'
 
 
+    
 def pre_process(tweet_str):
     emoji_pattern = re.compile("["
         u"\U0001F600-\U0001F64F"  # emoticons
@@ -46,9 +47,8 @@ def pre_process(tweet_str):
     return str1
 
 
-
-
 def get_twitter_data():
+    id = 1
 
     csvFile = open('/Users/nidhivanjare/Documents/GitHub/Final-Year-Project/Extracted Data.csv', 'a')
     csvWriter = csv.writer(csvFile)
@@ -57,6 +57,7 @@ def get_twitter_data():
     file = csv.reader(open('/Users/nidhivanjare/Documents/GitHub/Final-Year-Project/GeoNames.csv'), delimiter=',')
 
     for line in file:
+        
         # print(line)
         str1 = ""
         for ele in line: 
@@ -74,18 +75,24 @@ def get_twitter_data():
             
             for tweet in tweets:
 
-                csvWriter.writerow([tweet.created_at, tweet.full_text ,tweet.user.screen_name , tweet.user.location])
-                # print(tweet.full_text)
-                producer.send(topic_name, str.encode(tweet.full_text))
+                for i in range(1,10):
+                    csvWriter.writerow([tweet.created_at, tweet.full_text ,tweet.user.screen_name , tweet.user.location])
+                    # print(tweet.full_text)
+                    producer.send(topic_name, str.encode(tweet.full_text))
 
-                str2 = pre_process(tweet.full_text)
-                lst = [str2]
-                df = pd.Series( (v[0] for v in lst) )
-                trial1 = count_vector.transform(df)
-                predict = naive_bayes_from_pickle.predict(trial1)
-                print(str2)
-                print(predict)
-                lst.clear()
+                    str2 = pre_process(tweet.full_text)
+                    lst = [str2]
+                    df = pd.Series( (v[0] for v in lst) )
+                    trial1 = count_vector.transform(df)
+                    predict = naive_bayes_from_pickle.predict(trial1)
+                    print(str2)
+                    print(predict)
+                    lst.clear()
+                    
+                    if (predict == '0'):
+                        post = {"_id": id, "tweet": tweet.full_text}
+                        id = id+1
+                        get_post(post)
 
                 # lst = [] 
                 # for i in range(1,100):
@@ -97,10 +104,6 @@ def get_twitter_data():
                 # # print(str2)
                 # print(predict)
                 
-
-
-
-
 get_twitter_data()
 
 
