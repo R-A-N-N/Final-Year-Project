@@ -47,7 +47,7 @@ df2.head(10)
 # plt.show()
 
 
-# #WordCloud Visualisation 
+#WordCloud Visualisation 
 
 
 # df2['Output'] = df2['Output'].astype(str).astype(int)
@@ -82,7 +82,7 @@ df2.head(10)
 # ax[2].axis('off')
 # plt.show()
 
-#Pre-processing text data
+# Pre-processing text data
 
 # 1. Remove punctuations
 # 2. Tokenization - Converting a sentence into list of words
@@ -196,6 +196,15 @@ print('Recall score: ', format(recall_score(y_test, predictions , pos_label='1')
 print('F1 score: ', format(f1_score(y_test, predictions ,pos_label='1')))
 
 
+
+# Save the vectorizer
+vec_file = 'vectorizer.pickle'
+pickle.dump(count_vector, open(vec_file, 'wb'))
+
+loaded_vectorizer = pickle.load(open('vectorizer.pickle', 'rb'))
+
+
+
 # Saving the model 
 # Save the trained model as a pickle string.
 saved_model = pickle.dumps(naive_bayes)
@@ -207,38 +216,43 @@ naive_bayes_from_pickle = pickle.loads(saved_model)
 # naive_bayes_from_pickle.predict(X_test)
 
 
-lst = [
-       ['we should meet at ghodbunder road']
-       ,['There is a new restaurant in Manpada'] 
-       ,['Let us celebrate Diwali in Vasant Vihar area'] 
-       ,['I have to give my ielts exam at Wagale estate.']
-       ,['Why are you dancing near kasarvadavali?'] 
-       ,['I am a teacher at Vasant Vihar high school and the students are very mischievious'] #this is giving wrong ..idk why 
-       ,['How can I go to Khopat ST stand?']
-       ,['I am vising thane today']] 
-df = pd.Series( (v[0] for v in lst) )
-
-trial = count_vector.transform(df)
-
-prediction_trial = naive_bayes_from_pickle.predict(trial)
-print(prediction_trial)
 
 
-lst1 = [['Traffic is crazy']
-       ,['Going out today']
-       ,['What is wrong with the wi-fi in this locality']
-       ,['Party..yayay'],['Life is unfair']
-       ,['Hospitals running low on staff']
-       ,['Children going to school']
-       ,['Cant sleep']
-       ,['Heavy rainfall in the city']
-       ,['I have a problem in my family']
-       ,['There are no proper streetlights in this city TMC should take action']
-        ,['This is how citizens respect traffic laws in Mumbai. + No Helmet+ Wrong Side Driving'],['RT This is how citizens respect traffic laws in Mumbai No Helmet Wrong Side Driving Not expecting any action on this']] 
+# lst = [
+#        ['we should meet at ghodbunder road']
+#        ,['There is a new restaurant in Manpada'] 
+#        ,['Let us celebrate Diwali in Vasant Vihar area'] 
+#        ,['I have to give my ielts exam at Wagale estate.']
+#        ,['Why are you dancing near kasarvadavali?'] 
+#        ,['I am a teacher at Vasant Vihar high school and the students are very mischievious'] #this is giving wrong ..idk why 
+#        ,['How can I go to Khopat ST stand?']
+#        ,['I am vising thane today']] 
+# df = pd.Series( (v[0] for v in lst) )
 
+# trial = count_vector.transform(df)
+# # print(trial)
+
+# prediction_trial = naive_bayes_from_pickle.predict(trial)
+# print(prediction_trial)
+
+
+# lst1 = [['Traffic is crazy']
+#        ,['Going out today']
+#        ,['What is wrong with the wi-fi in this locality']
+#        ,['Party..yayay'],['Life is unfair']
+#        ,['Hospitals running low on staff']
+#        ,['Children going to school']
+#        ,['Cant sleep']
+#        ,['Heavy rainfall in the city']
+#        ,['I have a problem in my family']
+#        ,['There are no proper streetlights in this city TMC should take action']
+#         ,['This is how citizens respect traffic laws in Mumbai. + No Helmet+ Wrong Side Driving'],['RT This is how citizens respect traffic laws in Mumbai No Helmet Wrong Side Driving Not expecting any action on this']] 
+
+str3 = 'There are no proper streetlights in this city TMC should take action'
+lst1 = [[str3]]
 df = pd.Series( (v[0] for v in lst1) )
-
-trial = count_vector.transform(df)
-
+print(df)
+trial = loaded_vectorizer.transform(df)
+print(trial)
 prediction_trial = naive_bayes_from_pickle.predict(trial)
 print(prediction_trial)

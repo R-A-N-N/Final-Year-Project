@@ -23,6 +23,7 @@ access_token= '<KEY>'
 access_token_secret= '<KEY>'
 
 
+
 auth = tw.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 api = tw.API(auth, wait_on_rate_limit=True)
@@ -31,6 +32,7 @@ api = tw.API(auth, wait_on_rate_limit=True)
 producer = KafkaProducer(bootstrap_servers="localhost:9092")
 topic_name = 'fyp'
 
+loaded_vectorizer = pickle.load(open('vectorizer.pickle', 'rb'))
 
     
 def pre_process(tweet_str):
@@ -47,15 +49,18 @@ def pre_process(tweet_str):
     return str1
 
 
-def get_twitter_data():
-    id = 1
 
+def get_twitter_data():
+    id = 0
+
+    
+    naive_bayes_from_pickle = pickle.loads(saved_model)
     csvFile = open('/Users/nidhivanjare/Documents/GitHub/Final-Year-Project/Extracted Data.csv', 'a')
     csvWriter = csv.writer(csvFile)
 
     # Define the search term and the date_since date as variables
     file = csv.reader(open('/Users/nidhivanjare/Documents/GitHub/Final-Year-Project/GeoNames.csv'), delimiter=',')
-
+    
     for line in file:
         
         # print(line)
@@ -80,28 +85,24 @@ def get_twitter_data():
                 producer.send(topic_name, str.encode(tweet.full_text))
 
                 str2 = pre_process(tweet.full_text)
-                lst = [str2]
-                df = pd.Series( (v[0] for v in lst) )
-                trial1 = count_vector.transform(df)
-                predict = naive_bayes_from_pickle.predict(trial1)
                 print(str2)
+                lst = [[str2]]
+                # print(lst)
+                df1 = pd.Series((v1[0] for v1 in lst))
+                # print(df1)
+                trial1 = loaded_vectorizer.transform(df1)
+                # print(trial1)
+                predict = naive_bayes_from_pickle.predict(trial1)
+                # print(str2)
                 print(predict)
                 lst.clear()
                 
-                if (predict == '0'):
+                if (predict == '1'):
                     post = {"_id": id, "tweet": tweet.full_text}
                     id = id+1
                     get_post(post)
 
-                # lst = [] 
-                # for i in range(1,100):
-                #     str2 = pre_process(tweet.full_text)
-                #     lst.append(str2)
-                #     df = pd.Series( (v[0] for v in lst) )
-                # trial1 = count_vector.transform(df)
-                # predict = naive_bayes_from_pickle.predict(trial1)
-                # # print(str2)
-                # print(predict)
+        
                 
 get_twitter_data()
 
