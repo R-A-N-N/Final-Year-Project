@@ -3,6 +3,8 @@ import tweepy as tw
 from time import sleep
 from kafka import KafkaConsumer, KafkaProducer
 from datetime import datetime
+import pymongo
+from pymongo import MongoClient 
 import csv
 import pandas as pd
 import numpy as np
@@ -17,11 +19,10 @@ from model_traning import *
 from mongodbConnection import *
 
 
-consumer_key= '<KEY>'
-consumer_secret= '<KEY>'
-access_token= '<KEY>'
-access_token_secret= '<KEY>'
-
+# consumer_key= '<KEY>'
+# consumer_secret= '<KEY>'
+# access_token= '<KEY>'
+# access_token_secret= '<KEY>'
 
 
 auth = tw.OAuthHandler(consumer_key, consumer_secret)
@@ -49,11 +50,17 @@ def pre_process(tweet_str):
     return str1
 
 
-
 def get_twitter_data():
-    id = 0
 
-    
+    # getting the last value of the id from mongo db cluster 
+    last_value = collection.find().sort([("_id", -1)]).limit(1)
+    for doc in last_value:
+    # print(last_value)
+        print(doc)
+        id1 = doc['_id']
+        id1 += 1
+
+  
     naive_bayes_from_pickle = pickle.loads(saved_model)
     csvFile = open('/Users/nidhivanjare/Documents/GitHub/Final-Year-Project/Extracted Data.csv', 'a')
     csvWriter = csv.writer(csvFile)
@@ -73,7 +80,7 @@ def get_twitter_data():
 
             # Collect tweets
             tweets = tw.Cursor(api.search_tweets,
-                        q=search_words,
+                        q =search_words,
                         lang="en", count= 1 ,tweet_mode="extended").items()
             tweets
             # Iterate and print tweets
@@ -98,8 +105,8 @@ def get_twitter_data():
                 lst.clear()
                 
                 if (predict == '1'):
-                    post = {"_id": id, "tweet": tweet.full_text}
-                    id = id+1
+                    post = {"_id": id1, "tweet": tweet.full_text}
+                    id1 = id1+1
                     get_post(post)
 
         

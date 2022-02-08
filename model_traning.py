@@ -18,7 +18,7 @@ import pickle
 #modle traning 
 
 def load_data():
-    data = pd.read_csv('/Users/nidhivanjare/Documents/GitHub/Final-Year-Project/training_dataset.csv')
+    data = pd.read_csv('/Users/nidhivanjare/Documents/GitHub/Final-Year-Project/training_dataset_new.csv')
     return data
 
 # convert to dataframe
@@ -186,7 +186,7 @@ naive_bayes = MultinomialNB()
 naive_bayes.fit(training_data, y_train)
 
 predictions = naive_bayes.predict(testing_data)
-print(predictions)
+# print(predictions)
 
 
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
@@ -248,11 +248,11 @@ naive_bayes_from_pickle = pickle.loads(saved_model)
 #        ,['There are no proper streetlights in this city TMC should take action']
 #         ,['This is how citizens respect traffic laws in Mumbai. + No Helmet+ Wrong Side Driving'],['RT This is how citizens respect traffic laws in Mumbai No Helmet Wrong Side Driving Not expecting any action on this']] 
 
-str3 = 'There are no proper streetlights in this city TMC should take action'
-lst1 = [[str3]]
-df = pd.Series( (v[0] for v in lst1) )
-print(df)
-trial = loaded_vectorizer.transform(df)
-print(trial)
-prediction_trial = naive_bayes_from_pickle.predict(trial)
-print(prediction_trial)
+# str3 = 'There are no proper streetlights in this city TMC should take action'
+# lst1 = [[str3]]
+# df = pd.Series( (v[0] for v in lst1) )
+# print(df)
+# trial = loaded_vectorizer.transform(df)
+# print(trial)
+# prediction_trial = naive_bayes_from_pickle.predict(trial)
+# print(prediction_trial)
