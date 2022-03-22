@@ -1,4 +1,3 @@
-
 import tweepy as tw
 from time import sleep
 from kafka import KafkaConsumer, KafkaProducer
@@ -23,6 +22,10 @@ from mongodbConnection import *
 # consumer_secret= '<KEY>'
 # access_token= '<KEY>'
 # access_token_secret= '<KEY>'
+
+
+
+
 
 
 auth = tw.OAuthHandler(consumer_key, consumer_secret)
@@ -105,9 +108,16 @@ def get_twitter_data():
                 lst.clear()
                 
                 if (predict == '1'):
-                    post = {"_id": id1, "tweet": tweet.full_text}
-                    id1 = id1+1
-                    get_post(post)
+                    try :
+                        post = {"_id": id1, "tweet": tweet.full_text}
+                        id1 = id1+1
+                        get_post(post)
+                    except UnboundLocalError:
+                        id1 = 0
+                        post = {"_id": id1, "tweet": tweet.full_text}
+                        id1 = id1+1
+                        get_post(post)
+
 
         
                 
@@ -121,7 +131,4 @@ def periodic_work(interval):
 
 
 periodic_work(60*0.1)
-
-
-
 
