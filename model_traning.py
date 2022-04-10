@@ -1,3 +1,4 @@
+
 import tweepy as tw
 from time import sleep
 from kafka import KafkaConsumer, KafkaProducer
@@ -13,6 +14,8 @@ import string
 import re
 import os
 import pickle
+
+
 
 
 #modle traning 
@@ -150,14 +153,27 @@ df2.head()
 
 
 def clean_text(text):
+
     text_lc = "".join([word.lower() for word in text if word not in string.punctuation]) # remove puntuation
+    # print(text_lc)
+
     text_rc = re.sub('[0-9]+', '', text_lc)
+    # print(text_rc)
+
     tokens = re.split('\W+', text_rc)    # tokenization
+    # print(tokens)
+
     text = [ps.stem(word) for word in tokens if word not in stopword]  # remove stopwords and stemming
+    # print(text)
+    
     return text
 
 countVectorizer = CountVectorizer(analyzer=clean_text) 
 countVector = countVectorizer.fit_transform(df2['Tweets'])
+
+# print(countVectorizer.get_feature_names())
+
+
 print('{} Number of tweets has {} words'.format(countVector.shape[0], countVector.shape[1]))
 #print(countVectorizer.get_feature_names())
 

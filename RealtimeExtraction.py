@@ -18,11 +18,10 @@ from model_traning import *
 from mongodbConnection import *
 
 
-# consumer_key= '<KEY>'
-# consumer_secret= '<KEY>'
-# access_token= '<KEY>'
-# access_token_secret= '<KEY>'
-
+consumer_key= '<KEY>'
+consumer_secret= '<KEY>'
+access_token= '<KEY>'
+access_token_secret= '<KEY>'
 
 
 
@@ -109,12 +108,12 @@ def get_twitter_data():
                 
                 if (predict == '1'):
                     try :
-                        post = {"_id": id1, "tweet": tweet.full_text}
+                        post = {"_id": id1, "tweet": tweet.full_text ,"date_time" : tweet.created_at , "username":tweet.user.screen_name, "location":tweet.user.location}
                         id1 = id1+1
                         get_post(post)
                     except UnboundLocalError:
                         id1 = 0
-                        post = {"_id": id1, "tweet": tweet.full_text}
+                        post = {"_id": id1, "tweet": tweet.full_text ,"date_time" : tweet.created_at , "username":tweet.user.screen_name, "location":tweet.user.location}
                         id1 = id1+1
                         get_post(post)
 
