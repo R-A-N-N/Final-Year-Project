@@ -1,0 +1,1 @@
+mongopass = "mongodb+srv://nik123456:nik123456@tweets.drdld.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"

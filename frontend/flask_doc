@@ -1,0 +1,7 @@
+https://ankush-chavan.medium.com/creating-flask-application-with-mongodb-database-77ec45b5b995
+https://faun.pub/integrating-mongodb-with-flask-8f6568863c2a
+
+- pip install pymongo
+- pip install dnspython
+- python app.py
+- go to http://127.0.0.1:5000/
