@@ -224,9 +224,11 @@
 			{% for tw in tweets %}
 			
 					<div class="tweet">
-			            <span><b>{{ tw['username'] }}</b></span><br><br>
-			            {{ tw['tweet'] }}
-			            <br><br><span class="loc light">{{ tw['location'] }}</span><span class="date light">{{ tw['date_time'] }}</span>
+						<span>{{ tw['name'] }}</span><br> <!-- Not Working -->
+			            <span><b>{{ tw['username'] }}</b></span>
+						<br><br>{{ tw['tweet'] }}<br><br>
+						<span class="loc light">{{ tw['location'] }}</span>
+						<span class="date light">{{ tw['date_time'] }}</span>
 			        </div>
 			
 			{% endfor %}

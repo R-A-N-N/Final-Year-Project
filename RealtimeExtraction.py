@@ -26,7 +26,6 @@ access_token_secret= '<KEY>'
 
 
 
-
 auth = tw.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 api = tw.API(auth, wait_on_rate_limit=True)
@@ -90,7 +89,8 @@ def get_twitter_data():
             for tweet in tweets:
             
                 csvWriter.writerow([tweet.created_at, tweet.full_text ,tweet.user.screen_name , tweet.user.location])
-                # print(tweet.full_text)
+                # print(tweet.user.name , tweet.user.screen_name)
+
                 producer.send(topic_name, str.encode(tweet.full_text))
 
                 str2 = pre_process(tweet.full_text)
@@ -105,15 +105,28 @@ def get_twitter_data():
                 # print(str2)
                 print(predict)
                 lst.clear()
+
+                # if (predict == 1):
+
+                #     if word in tweet: 
+                #         location = word
+                time = str(tweet.created_at)
+                x = time.split(" ")
+
+                
+
+                        
                 
                 if (predict == '1'):
                     try :
-                        post = {"_id": id1, "tweet": tweet.full_text ,"date_time" : tweet.created_at , "username":tweet.user.screen_name, "location":tweet.user.location}
+                        post = {"_id": id1, "tweet": tweet.full_text ,"date_time" : x[0] , "username":tweet.user.screen_name, "name":tweet.user.name, "location":str1}
                         id1 = id1+1
+                        # print(tweet.created_at)
                         get_post(post)
+                        
                     except UnboundLocalError:
                         id1 = 0
-                        post = {"_id": id1, "tweet": tweet.full_text ,"date_time" : tweet.created_at , "username":tweet.user.screen_name, "location":tweet.user.location}
+                        post = {"_id": id1, "tweet": tweet.full_text ,"date_time" : x[0] , "username":tweet.user.screen_name, "name":tweet.user.name, "location":str1}
                         id1 = id1+1
                         get_post(post)
 

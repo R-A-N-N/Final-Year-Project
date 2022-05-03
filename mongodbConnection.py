@@ -3,9 +3,8 @@ from pymongo import MongoClient
 
 cluster = MongoClient("mongodb+srv://<username>:<password>@tweets.drdld.mongodb.net/Data?retryWrites=true&w=majority")
 
-
 db = cluster["Data"]
-collection  = db["Tweet"]
+collection  = db["Tweets"]
 
 # db.Tweets.createIndex({_id})
 collection.create_index('tweet', unique = True) 
