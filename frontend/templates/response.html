@@ -224,8 +224,9 @@
 			{% for tw in tweets %}
 			
 					<div class="tweet">
-						<span>{{ tw['name'] }}</span><br> <!-- Not Working -->
-			            <span><b>{{ tw['username'] }}</b></span>
+						<span class="name"><b>{{ tw['name'] }}</b></span><br>
+						<!-- Not Working -->
+			            <span class="user light">{{ tw['username'] }}</span>
 						<br><br>{{ tw['tweet'] }}<br><br>
 						<span class="loc light">{{ tw['location'] }}</span>
 						<span class="date light">{{ tw['date_time'] }}</span>
@@ -239,6 +240,8 @@
 
 	<script type="text/javascript">
 		
+		const activities = []
+
 		
 
 		const sortedActivities = activities.sort((a, b) => b.date - a.date)
