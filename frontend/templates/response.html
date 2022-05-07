@@ -86,30 +86,30 @@
 		   padding:0;
 		}
 		/* HTML Nav Styles */
-		nav menuitem {
+		nav span {
 		   position:relative;
 		   display:block;
 		   opacity:0;
 		   cursor:pointer;
 		}
 
-		nav menuitem > menu {
+		nav span > menu {
 		   position: absolute;
 		   pointer-events:none;
 		}
 		nav > menu { display:flex; }
 
-		nav > menu > menuitem { pointer-events: all; opacity:1; }
-		menu menuitem a { white-space:nowrap; display:block; }
+		nav > menu > span { pointer-events: all; opacity:1; }
+		menu span a { white-space:nowrap; display:block; }
 		   
-		menuitem:hover > menu {
+		span:hover > menu {
 		   pointer-events:initial;
 		}
-		menuitem:hover > menu > menuitem,
-		menu:hover > menuitem{
+		span:hover > menu > span,
+		menu:hover > span{
 		   opacity:1;
 		}
-		nav > menu > menuitem menuitem menu {
+		nav > menu > span span menu {
 		   transform:translateX(100%);
 		   top:0; right:0;
 		}
@@ -143,7 +143,7 @@
 		   height:100%;
 		}
 
-		nav > menu > menuitem > a + menu:after{
+		nav > menu > span > a + menu:after{
 		   content: '';
 		   position:absolute;
 		   border:10px solid transparent;
@@ -151,7 +151,7 @@
 		   left:12px;
 		   top: -40px;  
 		}
-		nav menuitem > menu > menuitem > a + menu:after{ 
+		nav span > menu > span > a + menu:after{ 
 		   content: '';
 		   position:absolute;
 		   border:10px solid transparent;
@@ -161,24 +161,24 @@
 		   transition: opacity 0.6, transform 0s;
 		}
 
-		nav > menu > menuitem > menu > menuitem{
+		nav > menu > span > menu > span{
 		   transition: transform 0.6s, opacity 0.6s;
 		   transform:translateY(150%);
 		   opacity:0;
 		}
-		nav > menu > menuitem:hover > menu > menuitem,
-		nav > menu > menuitem.hover > menu > menuitem{
+		nav > menu > span:hover > menu > span,
+		nav > menu > span.hover > menu > span{
 		   transform:translateY(0%);
 		   opacity: 1;
 		}
 
-		menuitem > menu > menuitem > menu > menuitem{
+		span > menu > span > menu > span{
 		   transition: transform 0.6s, opacity 0.6s;
 		   transform:translateX(195px) translateY(0%);
 		   opacity: 0;
 		} 
-		menuitem > menu > menuitem:hover > menu > menuitem,  
-		menuitem > menu > menuitem.hover > menu > menuitem{  
+		span > menu > span:hover > menu > span,  
+		span > menu > span.hover > menu > span{  
 		   transform:translateX(0) translateY(0%);
 		   opacity: 1;
 		}
@@ -195,23 +195,23 @@
     	<div style="margin-left: 35%; margin-top: -2em">
 	        <nav>
 	        <menu>
-	            <menuitem id="demo1">
+	            <span id="demo1">
 	                <a>Filter By Location</a>
 	                <menu>
-	                    <menuitem onclick="u_loc('Anu Nagar')"><a>Anu Nagar</a></menuitem>
-	                    <menuitem onclick="u_loc('Charai')"><a>Charai</a></menuitem>
-	                    <menuitem onclick="u_loc('Balkum')"><a>Balkum</a></menuitem>
-	                    <menuitem><a>Indira Nagar</a></menuitem>
-	                    <menuitem><a>Vartak Nagar</a></menuitem>
+	                    <span onclick="u_loc('Azad Nagar')"><a>Azad Nagar</a></span>
+	                    <span onclick="u_loc('Anu Nagar')"><a>Anu Nagar</a></span>
+	                    <span onclick="u_loc('Charai')"><a>Charai</a></span>
+	                    <span onclick="u_loc('Balkum')"><a>Balkum</a></span>
+	                    <span onclick="u_loc('Dhokali Naka')"><a>Dhokali Naka</a></span>
 	                </menu>
-	            </menuitem>
-	            <menuitem>
+	            </span>
+	            <span>
 	                <a id="demo2">Filter By Date</a>
 	                <menu>
-	                    <menuitem><a>Oldest</a></menuitem>
-	                    <menuitem><a>Newest</a></menuitem>
+	                    <span onclick="u_date('old')"><a>Oldest</a></span>
+	                    <span onclick="u_date('new')"><a>Newest</a></span>
 	                </menu>
-	            </menuitem>
+	            </span>
 	        </menu>
 	    	</nav>
 	    </div>
@@ -224,6 +224,7 @@
 			
 					<div class="tweet">
 						<span class="name"><b>{{ tw['name'] }}</b></span><br>
+						<!-- Not Working -->
 			            <span class="user light">{{ tw['username'] }}</span>
 						<br><br>{{ tw['tweet'] }}<br><br>
 						<span class="loc light">{{ tw['location'] }}</span>
@@ -238,24 +239,20 @@
 
 	<script type="text/javascript">
 
+		// filter - locations function
+		function u_loc(location){
 
-		function u_loc(loca){
-
-			let count = 0;
 			// let n = document.getElementsByClassName("tweet").length;
-			for (var i = 49; i >= 0; i--) {
+			for (var i = 23; i >= 0; i--) {
 
 				document.getElementsByClassName("tweet")[i].style.display = "block";
 
+				// location selected by user
 				let each_loc = document.getElementsByClassName("loc")[i].childNodes[0].data;
 
-				// console.log("each_loc: ",each_loc);
-				// console.log("loca: ",loca);
-
-				if (each_loc != loca){
-					count+=1;
-					console.log(each_loc);
-					console.log(count);
+				// condition to compare location selected by user and locations from tweets
+				if (each_loc != location){
+					// hide tweets other than selected location
 					document.getElementsByClassName("tweet")[i].style.display = "none";
 				}
 				else{
@@ -265,9 +262,43 @@
 			
 		}
 
-		
 
-		const sortedActivities = activities.sort((a, b) => b.date - a.date)
+
+		// function to sort dates
+		function u_date(arg) {
+
+			var lst = [];
+			for (var i = 23; i >= 0; i--){
+				var Dat = document.getElementsByClassName("date")[i].childNodes[0].data;
+				var Datees = lst.push(Dat);
+			}
+			var unique = lst.filter((v, i, a) => a.indexOf(v) === i);
+			var n = unique.length;
+			unique = unique.sort();
+
+
+			for(var i = n; i >= 0; i--){
+
+				var curr_date = document.getElementsByClassName("date").childNodes[i].data;
+
+				if(curr_date == unique[i]){
+					
+				}
+			}
+		}
+
+
+		// const reverseDateRepresentation = date => {
+		// let parts = date.split('-');
+		// 	return `${parts[2]}-${parts[1]}-${parts[0]}`;
+		// };
+
+		// var Datees = ['01-02-2018', '02-01-2018', '01-01-2018', '31-12-2017']
+
+
+		// var sortedDates = Datees.map(reverseDateRepresentation).sort().map(reverseDateRepresentation);
+
+		// console.log(sortedDates);
 
 	</script>
 
